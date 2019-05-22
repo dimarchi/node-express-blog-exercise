@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Korouoma Blog - New Post</title>
+        <link href="https://fonts.googleapis.com/css?family=Forum|Noto+Sans" rel="stylesheet" />
+        <link rel="stylesheet" type="text/css" href="/css/project.css" />
+        <script src="/js/create.js"></script>
+    </head>
+
+    <body>
+        <nav>
+            <a href="/" title="Home">Home</a>
+            <a href="/blog" title="Blog">Blog</a>
+            <a href="/blog/create" title="Create new blog post">Write</a>
+        </nav>
+        <header>
+            <h1>New Blog</h1>
+        </header>
+
+        <main class="create">
+            <p>
+                Need practice text? Try this <a href="https://fi.lipsum.com/" target="_blank" rel="noopener, noreferrer">Lorem Ipsum</a> page. The link opens in a new tab or window. Submitting the blog article redirects you to the new blog.
+            </p>
+
+            <form name="newblog" id="newblog" method="post" action="/blog/create">
+                <input type="text" name="heading" id="heading" placeholder="Article heading. Required." required />
+                <p id="headingerror">&nbsp;</p>
+                <textarea name="body" id="body" placeholder="Article body. Required." required></textarea>
+                <p id="bodyerror">&nbsp;</p>
+                <button type="submit" name="id" id="id" title="Create a new blog post.">Create</button>
+                <button type="reset" name="newresetbutton" id="newresetbutton" title="Clear the form.">Clear</button>
+            </form>
+
+        </main>
+        <footer>
+            <p>&nbsp;</p>
+        </footer>
+    </body>
+</html>

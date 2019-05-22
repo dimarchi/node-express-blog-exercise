@@ -1,0 +1,368 @@
+html {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: 'Noto Sans', sans-serif;
+    display: flex;
+    flex-direction: column;
+}
+
+/* preloading images */
+body:after {
+    content: url(../images/4453089759_8eea9cab75_o.jpg) url(../images/Korouoma.JPG) url(../images/Taivalvaara_Icewall.JPG);
+    display: none;
+}
+
+nav, footer {
+    background: gray;
+    color: white;
+    padding: 1em;
+}
+
+nav a, footer a {
+    text-transform: uppercase;
+    text-decoration: none;
+}
+
+nav a {
+    margin-right: 2em;
+}
+
+nav a:link, footer a:link {
+    color: white;
+}
+
+nav a:visited, footer a:visited {
+    color: white;
+}
+
+nav a:hover, footer a:hover {
+    color: white;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+}
+
+nav a.login-link {
+    float: right;
+    margin-right: 0;
+}
+
+nav form {
+    position: absolute;
+    top: 4em;
+    right: 1em;
+    overflow: hidden;
+    background-color: white;
+    padding: 1em 2em 1em 2em;
+    border-radius: 10px;
+    width: 30%;
+    box-shadow: 0px 10px 10px rgba(0,0,0,.5);
+}
+
+nav form input {
+    display: block;
+    font-family: inherit;
+    display: block;
+    border-radius: 5px;
+    background: white;
+    width: 100%;
+    border: 1px solid gray;
+    padding: 0.75em 0.75em;
+    margin: 15px -10px;
+    clear: both;
+}
+
+nav form button {
+    cursor: pointer;
+    color: #fff;
+    background: red;
+    text-transform: uppercase;
+    font-weight: bolder;
+    border: 0;
+    padding: 0.75em 0;
+    padding-left: 1.5em;
+    padding-right: 1.5em;
+    margin-top: 0.75em;
+    border-radius: 5px;
+}
+
+nav form button:hover {
+    background: green;
+}
+
+nav form button.registerbutton {
+    
+}
+
+nav form button.registerbutton:hover {
+    background: greenyellow;
+}
+
+.hideform {
+    display: none;
+}
+
+.hidelink {
+    display: none;
+}
+
+header {
+    margin-top: 5em;
+    font-family: 'Forum', cursive;
+    height: 10em;
+    background: url(../images/Korouoma.JPG) top left no-repeat;
+    margin-bottom: 5em;
+    /* for both top and bottom (values bottom first, top second after comma
+    box-shadow: 0px 10px 10px rgba(0,0,0,.5), 0px -10px 10px rgba(0,0,0,.5);
+    */
+    box-shadow: 0px 10px 10px rgba(0,0,0,.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10em;
+    animation: animatebg 40s ease-in-out infinite;
+}
+
+@keyframes animatebg {
+    0% {
+        background: url(../images/Korouoma.JPG) top left no-repeat;
+    }
+    33% {
+        background: url(../images/4453089759_8eea9cab75_o.jpg) top left no-repeat;
+    }
+    66% {
+        background: url(../images/Taivalvaara_Icewall.JPG) top left no-repeat;
+    }
+    100% {
+        background: url(../images/Korouoma.JPG) top left no-repeat;
+    }
+}
+
+h1, h2 {
+    text-transform: uppercase;
+}
+
+h1 {
+    font-size: 20vh;
+    color: white;
+    text-align: center;
+}
+
+h2 {
+    text-align: left;
+    color: black;
+}
+
+/* start of home page specific layout */
+.intro-grid {
+    grid-area: intro;
+}
+
+.left-column {
+    grid-area: lcol;
+}
+
+.right-column {
+    grid-area: rcol;
+}
+
+.end-grid {
+    grid-area: end;
+}
+
+main.home {
+    margin-left: 5em;
+    margin-right: 5em;
+    text-align: justify;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    grid-column-gap: 2em;
+    grid-template-areas: 
+    "intro intro"
+    "lcol rcol"
+    "end end"
+}
+/* end of home page specific layout */
+
+/* start of blog specific layout */
+article {
+    font-size: smaller;
+    background: beige;
+    border: 1px solid beige;
+    border-radius: 1em;
+    padding: 1em;
+    margin-bottom: 1em;
+}
+
+article p {
+    height: 4em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+article:hover {
+    cursor: pointer;
+}
+
+.blog-entry {
+    grid-area: entry;
+}
+
+.other-entries {
+    grid-area: others;
+}
+
+.other-entries article:first-of-type {
+    background: #F2E9C6;
+}
+
+.comments {
+    grid-area: comms;
+    border-bottom: 1px solid gray;
+}
+
+.comments div {
+    margin-bottom: 1em;
+    background: beige;
+    border-radius: 1em;
+    padding: 1em;
+    padding-top: 0;
+}
+
+.comments div h4 {
+    display: inline-block;
+}
+
+.comment-form {
+    grid-area: reply;
+}
+
+form {
+    margin-bottom: 3em;
+}
+
+form * {
+    display: block;
+    width: 100%;
+}
+
+form textarea {
+    height: 10em;
+    border: 1px solid black;
+    padding: 0.25em;
+    resize: vertical;
+}
+
+form input {
+    border: 1px solid black;
+    padding: 0.25em;
+}
+
+form button {
+    display: inline-block;
+    width: initial;
+    margin-right: 2em;
+}
+
+.noarticles {
+    visibility: hidden;
+}
+
+main.blog {
+    margin-left: 5em;
+    margin-right: 5em;
+    text-align: justify;
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: auto;
+    grid-column-gap: 2em;
+    grid-template-areas: 
+    "entry entry others"
+    "comms comms others"
+    "reply reply ."
+}
+
+/* end of blog specific layout */
+
+/* start of create blog specific layout */
+main.create {
+    margin-left: 5em;
+    margin-right: 5em;
+    text-align: justify;
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: auto;
+    grid-column-gap: 2em;
+}
+
+/* end of create blog specific layout */
+
+footer {
+    margin-top: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: smaller;
+}
+
+@media only screen and (max-width: 600px) {
+    header {
+        height: 5em;
+    }
+    h1 {
+        font-size: 10vh;
+    }
+    main.home {
+        margin-left: 1em;
+        margin-right: 1em;
+        text-align: justify;
+        display: grid;
+        grid-template-columns: auto;
+        grid-template-rows: auto;
+        grid-column-gap: 1em;
+        grid-template-areas: 
+        "intro"
+        "lcol"
+        "rcol"
+        "end"
+    }
+    main.blog {
+        margin-left: 1em;
+        margin-right: 1em;
+        text-align: justify;
+        display: grid;
+        grid-template-columns: auto;
+        grid-template-rows: auto;
+        grid-column-gap: 1em;
+        grid-template-areas: 
+        "entry"
+        "comms"
+        "reply"
+        "others"
+    }
+    main.create {
+        margin-left: 1em;
+        margin-right: 1em;
+    }
+
+    form button {
+        margin-right: 1em;
+    }
+    nav a {
+        margin-right: 1em;
+    }
+    nav a.login-link {
+        display: flex;
+        justify-content: left;
+    }
+    nav form {
+        position: absolute;
+        top: 4em;
+        left: 1em;
+        right: 1em;
+        width: auto;
+    }
+}
