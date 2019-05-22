@@ -87,3 +87,8 @@ typings/
 
 # DynamoDB Local files
 .dynamodb/
+
+# project specific files with no need to track
+articles.json
+comments.json
+db.json
