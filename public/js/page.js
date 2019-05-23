@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
    const loginForm = document.querySelector(".login");
    const loginLink = document.querySelector(".login-link");
-   const createLink = document.querySelector(".auth");
+   const logoutButton = document.querySelector("#logoutbutton");
    const registerButton = document.querySelector("#registerbutton");
 
    loginLink.addEventListener("click", (event) => {
@@ -57,6 +57,25 @@ document.addEventListener("DOMContentLoaded", () => {
          })
       })
    }
+
+   logoutButton.addEventListener("click", (event) => {
+      event.preventDefault();
+
+      fetch("/logout")
+      .then(response => {
+         response.json().then(data => {
+            loginForm.classList.add("hideform");
+            if (data.result == false) {
+               alert("You have been logged out.");
+            } else {
+               alert("Error!");
+            }
+         })
+      })
+      .catch(error => {
+         console.log(error);
+      })
+   })
  
    // basically just enters the data to file, does nothing else
    // no reaction whether it succeeded in it or not

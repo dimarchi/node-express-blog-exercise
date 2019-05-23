@@ -1,6 +1,7 @@
 const fs = require("fs"); // file system
 const http = require("http"); // server
 const express = require("express"); // express
+const session = require("express-session");
 const bodyParser = require("body-parser"); // used by express, middleware
 const bcrypt = require("bcrypt");
 
@@ -18,6 +19,20 @@ app.use(bodyParser.urlencoded({extended: false}));
 
 // use resources in the public folder
 app.use(express.static(__dirname + "/public"));
+
+// session init
+app.use(session({
+    name: "cookie", // cookie name
+    resave: false,
+    saveUninitialized: false,
+    rolling: true,
+    secret: "secret", // secret string used to encrypt the cookie
+    cookie: {
+        secure: false, // true for https (default), or false for http
+        maxAge: 1000 * 60 * 2, // cookie age in milliseconds
+        sameSite: true
+    }
+}));
 
 // page links
 app.get("/", (request, response) => {
@@ -247,13 +262,13 @@ function registerUser(content, fileName) {
 app.post("/login", checkAuth);
 
 async function checkAuth(req, res) {
-    await compareData(req.body, "db.json", res);
+    await compareData(req.body, "db.json", req, res);
 }
 
-function compareData(content, fileName, response) {
-    const registeredUser = {user: []};
+function compareData(content, fileName, request, response) {
     const plaintextPassword = content.pw;
     let hashedPassword = "";
+    let check = {};
     fs.exists(fileName, function(exists) {
         if (exists) {
             const data = fs.readFileSync(fileName, "utf-8");
@@ -262,6 +277,7 @@ function compareData(content, fileName, response) {
             // stops at first match
             for (let i = 0; i < json.user.length; i++) {
                 if (content.user == json.user[i].user) {
+                    request.session.userName = json.user[i].user;
                     hashedPassword = json.user[i].pw;
                     break;
                 }
@@ -269,19 +285,40 @@ function compareData(content, fileName, response) {
 
             bcrypt.compare(plaintextPassword, hashedPassword)
             .then(res => {
-                let check = {result: ""};
                 check.result = res;
-                let strCheck = JSON.stringify(check);
-                response.send(strCheck);
+                if (res) {
+                    check.name = request.session.userName;
+                } else {
+                    check.name = "";
+                }
+                response.send(check);
             })
             .catch(err => {
                 console.log(err);
             })
         } else {
-            return false;
+            check.result = false;
+            check.name = "";
+            response.send(check);
         }
     });
 }
+
+app.get("/logout", (request, response) => {
+    request.session.destroy(err => {
+        if (err) {
+            response.redirect("/");
+        } else {
+            request.session = null;
+            response.clearCookie('connect.sid', {
+                path: "/",
+                secure: false,
+                httpOnly: true
+            })
+            .send({result: false, name: ""});
+        }
+    });
+});
 
 // create server that is listening to a set port (above)
 http.createServer(app).listen(port, () => {
