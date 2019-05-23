@@ -206,25 +206,33 @@ function register(req, res) {
 
 // no check for uniqueness in user names
 function registerUser(content, fileName) {
-    const registeredUser = {user: []};
+    let registeredUser = {user: []};
     const plaintextPassword = content.pw;
     fs.exists(fileName, function(exists) {
         if (exists) {
-            bcrypt.hash(plaintextPassword, salt)
-            .then(hash => {
-                content.pw = hash;
-                let json = JSON.stringify(content);
-                fs.writeFile(fileName, json, "utf-8", function(err) {
-                    if (err) {
-                        console.log(err);
-                    }
-                });
-            })
-        } else {
             bcrypt.hash(plaintextPassword, saltRounds)
             .then(function(hash) {
                 content.pw = hash;
-                registeredUser.user = [...registeredUser.user, content];
+                fs.readFile(fileName, "utf-8", function(err, data) {
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        registeredUser = JSON.parse(data);
+                        registeredUser.user = [...registeredUser.user, content];
+                        let json = JSON.stringify(registeredUser);
+                        fs.writeFile(fileName, json, "utf-8", function(err) {
+                            if (err) {
+                                console.log(err);
+                            }
+                        });
+                    }
+                });
+            });
+        } else {
+            bcrypt.hash(plaintextPassword, saltRounds)
+            .then(hash => {
+                content.pw = hash;
+                registeredUser.user = [content];
                 let json = JSON.stringify(registeredUser);
                 fs.writeFile(fileName, json, "utf-8", function(err) {
                     if (err) {
