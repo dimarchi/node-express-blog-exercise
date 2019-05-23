@@ -213,16 +213,15 @@ app.get("/articles/:article", (req, res, next) => {
 
 app.post("/register", register);
 
-function register(req, res) {
-    registerUser(req.body, "db.json");
-    res.redirect("/");
-
+async function register(req, res) {
+    await registerUser(req.body, "db.json", res);
 }
 
 // no check for uniqueness in user names
-function registerUser(content, fileName) {
+function registerUser(content, fileName, response) {
     let registeredUser = {user: []};
     const plaintextPassword = content.pw;
+    let regStatus = {result: ""};
     fs.exists(fileName, function(exists) {
         if (exists) {
             bcrypt.hash(plaintextPassword, saltRounds)
@@ -237,7 +236,11 @@ function registerUser(content, fileName) {
                         let json = JSON.stringify(registeredUser);
                         fs.writeFile(fileName, json, "utf-8", function(err) {
                             if (err) {
-                                console.log(err);
+                                regStatus.result = false;
+                                response.send(regStatus);
+                            } else {
+                                regStatus.result = true;
+                                response.send(regStatus);
                             }
                         });
                     }
@@ -251,7 +254,11 @@ function registerUser(content, fileName) {
                 let json = JSON.stringify(registeredUser);
                 fs.writeFile(fileName, json, "utf-8", function(err) {
                     if (err) {
-                        console.log(err);
+                        regStatus.result = false;
+                        response.send(regStatus);
+                    } else {
+                        regStatus.result = true;
+                        response.send(regStatus);
                     }
                 });
             });
@@ -276,8 +283,8 @@ function compareData(content, fileName, request, response) {
             // makes no check whatsoever for unique user names
             // stops at first match
             for (let i = 0; i < json.user.length; i++) {
-                if (content.user == json.user[i].user) {
-                    request.session.userName = json.user[i].user;
+                if (content.user == json.user[i].name) {
+                    request.session.userName = json.user[i].name;
                     hashedPassword = json.user[i].pw;
                     break;
                 }

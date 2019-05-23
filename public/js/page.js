@@ -82,32 +82,39 @@ document.addEventListener("DOMContentLoaded", () => {
    // (should follow the above example, at the very least)
    registerButton.addEventListener("click", (event) => {
       event.preventDefault();
-      const userName = userNameElem.value.trim();
-      const password = passwordElem.value.trim();
-   
-      let data = {
-         user: userName,
-         pw: password
-      }
 
-      fetch("/register", {
-         method: "POST",
-         body: JSON.stringify(data),
-         headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
+      return new Promise ((resolve, reject) => {
+         const userName = userNameElem.value.trim();
+         const password = passwordElem.value.trim();
+      
+         let data = {
+            name: userName,
+            pw: password
          }
-      })
-     .then(response => {
-         
-      })
-      .then(json => {
-         loginForm.classList.add("hideform");
-         
-      })
-      .catch(error => {
-         console.log(error);
-      })
+
+         fetch("/register", {
+            method: "POST",
+            body: JSON.stringify(data),
+            headers: {
+               'Accept': 'application/json',
+               'Content-Type': 'application/json'
+            }
+         })
+         .then(response => {
+            response.json().then(data => {
+               resolve(data);
+               loginForm.classList.add("hideform");
+               if (data.result == true) {
+                  alert("Registration was successful.");
+               } else {
+                  alert("Registration failed.");
+               }
+            })
+         })
+         .catch(error => {
+            reject(error);
+         })
+      });
    })
 
    // https://www.quirksmode.org/js/cookies.html
