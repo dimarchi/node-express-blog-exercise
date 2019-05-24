@@ -217,34 +217,65 @@ async function register(req, res) {
     await registerUser(req.body, "db.json", res);
 }
 
-// no check for uniqueness in user names
+// only registration with unique user names allowed
 function registerUser(content, fileName, response) {
     let registeredUser = {user: []};
+
     const plaintextPassword = content.pw;
+    // id combines user name and unix timestamp
+    // although unique user name does the same thing (being unique)
+    content.id = content.name + Math.floor(Date.now() / 1000);
+    // since only user name and password are required, country may
+    // be left at default selection
+    content.country.name == "Select your country" ? content.country.name = "" : content.country.name;
+
     let regStatus = {result: ""};
+
     fs.exists(fileName, function(exists) {
         if (exists) {
-            bcrypt.hash(plaintextPassword, saltRounds)
-            .then(function(hash) {
-                content.pw = hash;
-                fs.readFile(fileName, "utf-8", function(err, data) {
-                    if (err) {
-                        console.log(err);
-                    } else {
-                        registeredUser = JSON.parse(data);
-                        registeredUser.user = [...registeredUser.user, content];
-                        let json = JSON.stringify(registeredUser);
-                        fs.writeFile(fileName, json, "utf-8", function(err) {
+            fs.readFile(fileName, "utf-8", function(err, data) {
+                if (err) {
+                    regStatus.result = false;
+                     response.send(regStatus);
+                }
+                let searchData = JSON.parse(data);
+                let searchUser = false;
+
+                for (let i = 0; i < searchData.user.length; i++) {
+                    if (searchData.user[i].name == content.name) {
+                        searchUser = true;
+                        break;
+                    }
+                }
+                if (searchUser) {
+                    regStatus.result = false;
+                    regStatus.name = "";
+                    regStatus.found = true;
+                    response.send(regStatus);
+                } else {
+                    bcrypt.hash(plaintextPassword, saltRounds)
+                    .then(function(hash) {
+                        content.pw = hash;
+                        fs.readFile(fileName, "utf-8", function(err, data) {
                             if (err) {
-                                regStatus.result = false;
-                                response.send(regStatus);
+                                console.log(err);
                             } else {
-                                regStatus.result = true;
-                                response.send(regStatus);
+                                registeredUser = JSON.parse(data);
+                                registeredUser.user = [...registeredUser.user, content];
+                                let json = JSON.stringify(registeredUser);
+                                fs.writeFile(fileName, json, "utf-8", function(err) {
+                                    if (err) {
+                                        regStatus.result = false;
+                                        response.send(regStatus);
+                                    } else {
+                                        regStatus.result = true;
+                                        response.send(regStatus);
+                                    }
+                                });
                             }
                         });
-                    }
-                });
+                    });
+                }
             });
         } else {
             bcrypt.hash(plaintextPassword, saltRounds)
@@ -280,6 +311,7 @@ function compareData(content, fileName, request, response) {
         if (exists) {
             const data = fs.readFileSync(fileName, "utf-8");
             const json = JSON.parse(data);
+
             // makes no check whatsoever for unique user names
             // stops at first match
             for (let i = 0; i < json.user.length; i++) {

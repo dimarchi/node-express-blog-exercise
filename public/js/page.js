@@ -5,18 +5,60 @@ document.addEventListener("DOMContentLoaded", () => {
    const loginForm = document.querySelector(".login");
    const loginLink = document.querySelector(".login-link");
    const logoutButton = document.querySelector("#logoutbutton");
+   const revealButton = document.querySelector("#revealbutton");
    const registerButton = document.querySelector("#registerbutton");
+   const fieldset = document.querySelector("#reg");
+
+   // closing the form when clicked outside the form
+   // or something other than the link that displays the form
+   document.addEventListener("mouseup", (event) => {
+      let elem = event.target.nodeName.toLowerCase();
+
+      switch(elem) {
+         case "form":
+            break;
+         case "input":
+            break;
+         case "button":
+            break;
+         case "select":
+            break;
+         case "fieldset":
+            break;
+         case "legend":
+            break;
+         default:
+            loginForm.classList.add("hideform");
+            fieldset.classList.remove("shown");
+            fieldset.classList.add("hidden");
+      }
+   });
 
    loginLink.addEventListener("click", (event) => {
       event.preventDefault();
-      loginForm.classList.contains("hideform") ? loginForm.classList.remove("hideform") : loginForm.classList.add("hideform");
+      if (loginForm.classList.contains("hideform")) {
+         loginForm.classList.remove("hideform"); 
+      }
+      if (fieldset.classList.contains("shown"))  {
+         fieldset.classList.remove("shown");
+         fieldset.classList.add("hidden");
+      }
    });
 
    const userNameElem = document.querySelector("#user");
    const passwordElem = document.querySelector("#pw");
+   const firstNameElem = document.querySelector("#first");
+   const lastNameElem = document.querySelector("#last");
+   const emailElem = document.querySelector("#email");
+   const streetElem = document.querySelector("#street");
+   const postcodeElem = document.querySelector("#postcode");
+   const cityElem = document.querySelector("#city");
+   const countryElem = document.querySelector("#country");
 
    loginForm.addEventListener("submit", (event) => {
       event.preventDefault();
+      loginForm.classList.add("hideform");
+
       const userName = userNameElem.value.trim();
       const password = passwordElem.value.trim();
    
@@ -43,7 +85,6 @@ document.addEventListener("DOMContentLoaded", () => {
          })
          .then(response => {
             response.json().then(data => {
-               loginForm.classList.add("hideform");
                resolve(data);
                if (data.result == true) {
                   alert("Login successful.");
@@ -82,14 +123,34 @@ document.addEventListener("DOMContentLoaded", () => {
    // (should follow the above example, at the very least)
    registerButton.addEventListener("click", (event) => {
       event.preventDefault();
+      loginForm.classList.add("hideform");
 
       return new Promise ((resolve, reject) => {
          const userName = userNameElem.value.trim();
          const password = passwordElem.value.trim();
+         const firstName = firstNameElem.value.trim();
+         const lastName = lastNameElem.value.trim();
+         const emailAddr = emailElem.value.trim();
+         const streetAddr = streetElem.value.trim();
+         const postcodeAddr = postcodeElem.value.trim();
+         const cityAddr = cityElem.value.trim();
+         const countryAddr = countryElem.options[countryElem.selectedIndex].value;
+         const countryName = countryElem.options[countryElem.selectedIndex].text;
       
          let data = {
             name: userName,
-            pw: password
+            pw: password,
+            first: firstName,
+            last: lastName,
+            email: emailAddr,
+            street: streetAddr,
+            postcode: postcodeAddr,
+            city: cityAddr,
+            country: 
+            {
+               numeric: countryAddr,
+               name: countryName
+            }
          }
 
          fetch("/register", {
@@ -103,11 +164,14 @@ document.addEventListener("DOMContentLoaded", () => {
          .then(response => {
             response.json().then(data => {
                resolve(data);
-               loginForm.classList.add("hideform");
                if (data.result == true) {
                   alert("Registration was successful.");
                } else {
-                  alert("Registration failed.");
+                  if (data.found == true) {
+                     alert("User name already taken. Registration cancelled.");
+                  } else {
+                     alert("Registration failed.");
+                  }
                }
             })
          })
@@ -115,6 +179,16 @@ document.addEventListener("DOMContentLoaded", () => {
             reject(error);
          })
       });
+   })
+
+   revealButton.addEventListener("click", (event) => {
+      event.preventDefault();
+      if (fieldset.classList.contains("shown")) {
+         fieldset.classList.replace("shown", "hidden");
+      } else {
+         fieldset.classList.replace("hidden", "shown");
+      }
+
    })
 
    // https://www.quirksmode.org/js/cookies.html
