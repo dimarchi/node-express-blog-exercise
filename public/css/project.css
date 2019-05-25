@@ -114,8 +114,13 @@ nav form button#revealbutton:hover {
     display: none;
 }
 
+p.status {
+    height: 1em;
+    margin-left: 1em;
+}
+
 header {
-    margin-top: 5em;
+    margin-top: 4em;
     font-family: 'Forum', cursive;
     height: 10em;
     background: url(../images/Korouoma.JPG) top left no-repeat;

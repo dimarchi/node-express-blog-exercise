@@ -225,6 +225,7 @@ document.addEventListener("DOMContentLoaded", () => {
    // function to load (article specific) comments
    const loadComments = () => {
       const articleID = document.querySelector("#articleid").value.trim();
+
       fetch(`/comments/${articleID}`)
       .then(data => data.json())
       .then(data => {

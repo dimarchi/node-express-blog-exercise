@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
    const logoutButton = document.querySelector("#logoutbutton");
    const revealButton = document.querySelector("#revealbutton");
    const registerButton = document.querySelector("#registerbutton");
+   const closeButton = document.querySelector("#closebutton");
    const fieldset = document.querySelector("#reg");
 
    // closing the form when clicked outside the form
@@ -22,6 +23,8 @@ document.addEventListener("DOMContentLoaded", () => {
          case "button":
             break;
          case "select":
+            break;
+         case "option":
             break;
          case "fieldset":
             break;
@@ -88,6 +91,7 @@ document.addEventListener("DOMContentLoaded", () => {
                resolve(data);
                if (data.result == true) {
                   alert("Login successful.");
+                  location.reload(true);
                } else {
                   alert("Login failed.");
                }
@@ -108,6 +112,7 @@ document.addEventListener("DOMContentLoaded", () => {
             loginForm.classList.add("hideform");
             if (data.result == false) {
                alert("You have been logged out.");
+               location.reload(true);
             } else {
                alert("Error!");
             }
@@ -116,6 +121,10 @@ document.addEventListener("DOMContentLoaded", () => {
       .catch(error => {
          console.log(error);
       })
+   })
+
+   closeButton.addEventListener("click", (event) => {
+      loginForm.classList.add("hideform");
    })
  
    // basically just enters the data to file, does nothing else

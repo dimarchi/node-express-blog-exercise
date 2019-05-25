@@ -29,22 +29,30 @@ app.use(session({
     secret: "secret", // secret string used to encrypt the cookie
     cookie: {
         secure: false, // true for https (default), or false for http
-        maxAge: 1000 * 60 * 2, // cookie age in milliseconds
+        maxAge: 1000 * 60 * 10, // cookie age in milliseconds, set for 10 mins
         sameSite: true
     }
 }));
 
+// start using ejs template engine
+app.set("view engine", "ejs");
+
 // page links
 app.get("/", (request, response) => {
-    response.sendFile(__dirname +  "/index.html");
+    // express way
+    //response.sendFile(__dirname +  "/index.html");
+    // ejs way
+    response.render("pages/index", {logged: request.session.name});
 });
 
 app.get("/blog", (request, response) => {
-    response.sendFile(__dirname + "/blog.html");
+    //response.sendFile(__dirname + "/blog.html");
+    response.render("pages/blog", {logged: request.session.name});
 });
 
 app.get("/blog/create", (request, response) => {
-    response.sendFile(__dirname + "/newblog.html");
+    //response.sendFile(__dirname + "/newblog.html");
+    response.render("pages/newblog", {logged: request.session.name});
 })
 
 // needed for parsing json request (application/json)
@@ -60,15 +68,18 @@ app.post("/blog", updateComments);
 // in the POST mode
 // WARNING: req.body (user fed data) NOT VALIDATED
 function updateComments(req, res) {
-    writeToComments(req.body, "comments.json");
+    writeToComments(req.body, "comments.json", req);
     res.redirect("/blog");
 }
 
 // write content sent by user to fileName
 // if the file does not exist, just write
 // if it does exist, append to existing data
-function writeToComments(content, fileName) {
+function writeToComments(content, fileName, request) {
     let obj = {posts:[]};
+    if (!request.session.name) {
+        content.name = content.name + " (not registered)";
+    }
     fs.exists(fileName, function(exists) {
         if (exists) {
             fs.readFile(fileName, "utf-8", function(err, data) {
@@ -316,7 +327,7 @@ function compareData(content, fileName, request, response) {
             // stops at first match
             for (let i = 0; i < json.user.length; i++) {
                 if (content.user == json.user[i].name) {
-                    request.session.userName = json.user[i].name;
+                    request.session.name = json.user[i].name;
                     hashedPassword = json.user[i].pw;
                     break;
                 }
@@ -326,7 +337,7 @@ function compareData(content, fileName, request, response) {
             .then(res => {
                 check.result = res;
                 if (res) {
-                    check.name = request.session.userName;
+                    check.name = request.session.name;
                 } else {
                     check.name = "";
                 }

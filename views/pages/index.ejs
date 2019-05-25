@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Korouoma Home - Welcome</title>
+        <link href="https://fonts.googleapis.com/css?family=Forum|Noto+Sans" rel="stylesheet" />
+        <link rel="stylesheet" type="text/css" href="/css/project.css" />
+        <script src="/js/page.js"></script>
+    </head>
+
+    <body>
+        <nav>
+            <a href="/" title="Home">Home</a>
+            <a href="/blog" title="Blog">Blog</a>
+            <% if (logged == "admin") { %>
+                <%- include("../partials/nav-logged"); %>
+             <% } %>
+            <a href="." title="Login" class="login-link">Login</a>
+
+            <form class="login hideform" method="POST" action="/login">
+                <input type="text" name="user" id="user" placeholder="User name">
+                <input type="password" name="pw" id="pw" placeholder="Password">
+                <button type="submit" name="submitbutton" id="submitbutton">Login</button>
+                <button type="button" name="logoutbutton" id="logoutbutton">Logout</button>
+                <button type="button" name="revealbutton" id="revealbutton">Register...</button>
+                <fieldset class="hidden" id="reg">
+                    <legend>Registration details</legend>
+                    <input type="text" name="first" id="first" placeholder="First name">
+                    <input type="text" name="last" id="last" placeholder="Last name">
+                    <input type="email" name="email" id="email" placeholder="Your email address">
+                    <input type="text" name="street" id="street" placeholder="Street address">
+                    <input type="text" name="postcode" id="postcode" placeholder="Post code">
+                    <input type="text" name="city" id="city" placeholder="City">
+                    
+                    <%- include("../partials/form-select-country"); %>
+
+                    <button type="button" name="registerbutton" id="registerbutton">Register</button>
+                    <button type="reset" name="resetbutton" id="resetbutton">Clear</button>
+                    <button type="button" name="closebutton" id="closebutton">Close</button>
+                </fieldset>
+            </form>
+        </nav>
+
+        <%- include("../partials/logged-status"); %>
+
+        <header>
+            <h1>Korouoma</h1>
+        </header>
+
+        <main class="home">
+            <section class="intro-grid">
+                <h2>Introduction</h2>
+                <p>
+                    Korouoma is about 30 kilometres (20 mi) long, few hundred metres wide and up to 130 m (430 ft) deep canyon at Posio,
+                    Finland. The entire area is a natural reserve. At the bottom of the canyon there's Korojoki River, which ends up to
+                    Kemijoki River. There are plenty of species in varied nature of Korouoma. Some of species found are rare. Korouoma
+                    offers great opportunities for hiking, watching the nature, fishing and reviewing the cultural history of usage of
+                    nature at the area.
+                </p>
+                <p>
+                    Korouoma is fairly popular hiking area. There is a marked hiking path at the bottom of the Korouoma and several
+                    fireplaces, huts and cabins. Finnish Administration of Forests takes care of the routes and hiking related
+                    infrastructure there.
+                </p>
+                <p>
+                    Part of Korouoma's distinctive nature are the cliffs both sides of it, where several streams freeze during the
+                    winter forming huge ice formations. Because of these ice formations Korouoma is known as the best ice climbing
+                    location in Finland. There are some climbing routes that can be used during the summer time as well.
+                </p>
+                <p>
+                    There are signs pointing to Korouoma from Rovaniemi–Posio road (main road 81).
+                </p>
+            </section>
+            <section class="left-column">
+                <h2>History</h2>
+                <p>
+                    There are signs of human settlement in the area from as early as in the late 19th century. The area’s forests have
+                    been utilised for hundreds of years and the River Korojoki and its tributaries have been log floating routes. Signs
+                    of log floating are visible at the River Kurttajoki in the Koivuköngäs area. Other signs are the remains of an old
+                    loggers´ lean-to shelter by the trail leading down from Saukkovaara Hill and the remnants of an old log floating
+                    flume halfway down the River Korojoki.
+                </p>
+                <p>
+                    The area’s farmers have taken their cattle and sheep to graze in the natural meadows at the bottom of the valley.
+                    The grass in these meadows was also sometimes mowed, stored in barns and used as feed for livestock. Bears and
+                    eagles tended to prey on sheep. The foundations of old barns can still be found on the river bank. Some of the
+                    natural meadows and barns are to be restored so that future generations will be able to see them as well.
+                </p>
+            </section>
+            <section class="right-column">
+                <h2>Nature</h2>
+                <p>
+                At the centre of Korouoma the fracture valley forms a gorge which has worn down and become much deeper than the
+                surrounding terrain. The walls of the gorge are cliff faces which are tens of metres high and extremely steep. Small
+                streams which cascade down the cliff faces freeze into icy water falls during winter. They stay frozen till late spring.
+                </p>
+                <p>
+                The River Korojoki meanders and twists at the bottom of the canyon flowing towards the northwest. Its banks are lined by
+                lush flood meadows and herb-rich forests. The vegetation in the northern part of the valley is lusher than in other
+                parts of the valley indicating that the soil is calcareous. On the other hand moderately dry and dry pine mineral soil
+                forests are the typical vegetation type in the Lapiosalmi area. The terrain around the valley is varied, marked by hilly
+                terrain and covered with old-growth forest. Between hills there are aapa bogs and spruce-covered hanging bogs
+                characteristic of Northern Ostrobothnia.
+                </p>
+            </section>
+            <section class="end-grid">
+                <h2>Climbing</h2>
+                <p>
+                    There are at least seven named ice falls, most of them offering multiple routes, which are graded roughly between WI3
+                    and WI6. The most obvious of these falls is the 1) Brown River (WI4/WI5), which is visible from the camping place at the
+                    bottom of Korouoma. Brown River is the highest of the falls, having up to 50 meters of ice suitable for climbing. Going
+                    up stream (left) from Brown River, one encounters 2) Mammoth (WI3), 3) Charlie (WI3/WI4), 4) Way of the Wind (WI3+/WI4)
+                    and Northern Lights (WI3+). Going down (right) from the Brown River, there’s 5) Monk cave (WI5+/WI6), which is pretty
+                    close, and then 6) Angel Fall (WI3) and 7) Wolf’s teeth, which both are much further down the Korouoma. Except for Monk
+                    Cave all of these falls are on the south side of the Koro River.
+                </p>
+                <p>
+                    In addition to these there are several such falls, that don't necessarily have names and might not be there every year.
+                </p>
+                <p>
+                    Though Korouoma is especially known for its ice climbing, there are plenty of cliffs to be climbed throughout the year.
+                </p>
+            </section>
+        </main>
+        <footer>
+            <p>
+                Text copied from the <a href="https://en.wikipedia.org/wiki/Korouoma" title="Korouoma Wikipedia page in English">Korouoma Wikipedia</a> page. 
+                Images from the Korouoma Wikipedia page and from <a href="https://www.flickr.com/photos/timo_w2s/4453089759" title="Timo Newton-Syms">Timo Newton-Syms</a>, 
+                used under the <a href="https://creativecommons.org/licenses/by-sa/2.0/" title="Creative Commons Attribution-ShareALike 2.0 Generic License">CC BY-SA 2.0</a> license.
+            </p>
+        </footer>
+    </body>
+</html>

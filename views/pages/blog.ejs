@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Korouoma Blog</title>
+        <link href="https://fonts.googleapis.com/css?family=Forum|Noto+Sans" rel="stylesheet" />
+        <link rel="stylesheet" type="text/css" href="/css/project.css" />
+        <script src="/js/blog.js"></script>
+    </head>
+
+    <body>
+        <nav>
+            <a href="/" title="Home">Home</a>
+            <a href="/blog" title="Blog">Blog</a>
+            <% if (logged == "admin") { %>
+                <%- include("../partials/nav-logged"); %>
+             <% } %>
+        </nav>
+
+        <%- include("../partials/logged-status"); %>
+
+        <header>
+            <h1>Korouoma Blog</h1>
+        </header>
+
+        <main class="blog">
+            <section class="blog-entry">
+            </section>
+            <section class="other-entries">
+                <h3>Blog posts</h3>
+            </section>
+            <section class="comments">
+                <h3>Comments</h3>
+            </section>
+            <section class="comment-form">
+                <h3>Leave a reply</h3>
+                <form name="commentform" id="commentform" method="POST" action="/blog">
+                    <textarea name="comment" id="comment" placeholder="Write your post here. Required." required></textarea>
+                    <p id="posterror">&nbsp;</p>
+                    <input type="text" name="commenter" id="commenter" placeholder="Your name. Required." required value="<% if (logged){ %><%= logged %><% } %>" <% if (logged){ %>disabled="true"<% } %> />
+                    <p id="nameerror">&nbsp;</p>
+                    <input type="email" name="commemail" id="commemail" placeholder="Your email address. Optional." />
+                    <p id="emailerror">&nbsp;</p>
+                    <input type="hidden" name="articleid" id="articleid" value="" />
+                    <button type="submit" name="submitbutton" id="submitbutton" title="Add your comment to this blog article">Send</button>
+                    <button type="reset" name="resetbutton" id="resetbutton" title="Clear the whole form">Clear</button>
+                </form>
+            </section>
+        </main>
+        <footer>
+            <p>
+                Lorem ipsum from one of the <a href="https://fi.lipsum.com/">Lorem Ipsum</a> web sites.
+           </p>
+        </footer>
+    </body>
+</html>
