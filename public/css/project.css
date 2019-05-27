@@ -183,11 +183,14 @@ h2 {
     grid-area: end;
 }
 
-main.home {
+main {
     margin-left: 5em;
     margin-right: 5em;
     text-align: justify;
     display: grid;
+}
+
+main.home {
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr;
     grid-column-gap: 2em;
@@ -312,10 +315,6 @@ form fieldset select {
 }
 
 main.blog {
-    margin-left: 5em;
-    margin-right: 5em;
-    text-align: justify;
-    display: grid;
     grid-template-columns: auto;
     grid-template-rows: auto;
     grid-column-gap: 2em;
@@ -329,16 +328,84 @@ main.blog {
 
 /* start of create blog specific layout */
 main.create {
-    margin-left: 5em;
-    margin-right: 5em;
-    text-align: justify;
-    display: grid;
     grid-template-columns: auto;
     grid-template-rows: auto;
     grid-column-gap: 2em;
 }
 
 /* end of create blog specific layout */
+
+.uhead {
+    grid-column-start: 1;
+    grid-column-end: 6;
+    grid-row-start: 1;
+    grid-row-end: 1;
+}
+
+.vcard {
+    grid-column-start: 2;
+    grid-column-end: 5;
+    grid-row-start: 2;
+    grid-row-end: 6;
+    background: url(../images/bin-earth.svg) top left no-repeat;
+    background-size: cover;
+}
+
+.usernick {
+    grid-column-start: 2;
+    grid-column-end: 5;
+    grid-row-start: 2;
+    grid-row-end: 3;
+    margin: 1em;
+    padding: 3em;
+    background: black;
+    opacity: 0.75;
+    color: white;
+    font-weight: 800;
+    font-size: larger;
+    text-transform: uppercase;
+    text-align: center;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+}
+
+.userdetails {
+    grid-column-start: 2;
+    grid-column-end: 5;
+    grid-row-start: 4;
+    grid-row-end: 6;
+    background: gold;
+    opacity: 0.85;
+}
+
+/* start of user details specific layout */
+main.user {
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-row-gap: 2em;
+    margin-bottom: 2em;
+}
+
+main.user ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+main.user ul ul {
+    margin: 1em;
+    padding: 1em;
+}
+
+main.user ul ul .email {
+    margin-top: 1em;
+    font-style: italic;
+}
+
+main.user ul ul .email a {
+    text-decoration: none;
+}
+
+/* end of user details specific layout */
 
 footer {
     margin-top: auto;
@@ -355,11 +422,13 @@ footer {
     h1 {
         font-size: 10vh;
     }
-    main.home {
+    main {
         margin-left: 1em;
         margin-right: 1em;
         text-align: justify;
         display: grid;
+    }
+    main.home {
         grid-template-columns: auto;
         grid-template-rows: auto;
         grid-column-gap: 1em;
@@ -370,10 +439,6 @@ footer {
         "end"
     }
     main.blog {
-        margin-left: 1em;
-        margin-right: 1em;
-        text-align: justify;
-        display: grid;
         grid-template-columns: auto;
         grid-template-rows: auto;
         grid-column-gap: 1em;
@@ -383,9 +448,18 @@ footer {
         "reply"
         "others"
     }
-    main.create {
-        margin-left: 1em;
-        margin-right: 1em;
+
+    main.user {
+        grid-template-columns: auto;
+        grid-template-rows: auto;
+        margin-bottom: 1em;
+    }
+    main.user ul {
+        margin: 0;
+    }
+    main.user ul ul {
+        margin: 1em;
+        padding: 1em;
     }
 
     form button {

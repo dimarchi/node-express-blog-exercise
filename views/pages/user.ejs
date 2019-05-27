@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Korouoma - User page</title>
+        <link href="https://fonts.googleapis.com/css?family=Forum|Noto+Sans" rel="stylesheet" />
+        <link rel="stylesheet" type="text/css" href="/css/project.css" />
+        <script src=""></script>
+    </head>
+
+    <body>
+        <nav>
+            <a href="/" title="Home">Home</a>
+            <a href="/blog" title="Blog">Blog</a>
+            <% if (logged == "admin") { %>
+                <%- include("../partials/nav-logged"); %>
+             <% } %>
+        </nav>
+
+        <header>
+            <h1>User page</h1>
+        </header>
+
+        <main class="user">
+            <h2 class="uhead">User details</h2>
+                <% user.user.forEach(function(u) { %>
+                    <ul class="vcard h-card">
+                        <li class="nickname p-nickname usernick"><%= u.name %></li>
+                        <% if (logged == u.name  || logged == "admin") { %>
+                        <li><ul class="userdetails">
+                        <li class="fn p-name"><%= u.first %> <%= u.last %></li>
+                        <li class="street-address p-street-address"><%= u.street %></li>
+                        <li class="postal-code p-postal-code"><%= u.postcode %></li>
+                        <li class="locality p-locality"><%= u.city %></li>
+                        <li class="country-name p-country-name"><%= u.country.name %></li>
+                        <% if (u.email) { %>
+                        <li class="email u-email"><a href="mailto:<%=u.email%>" title="Send e-mail to this user"><%= u.email %></a></li>
+                        <% } %>
+                        </ul></li>
+                        <% } %>
+                    </ul>
+                <% }); %>
+        </main>
+
+        <footer>
+            <p>
+                Background SVG image from <a href="https://svgsilh.com/image/1254501.html" title="SVG Silh">SVG Silh</a>.
+            </p>
+        </footer>
+        
+    </body>
+</html>

@@ -53,7 +53,31 @@ app.get("/blog", (request, response) => {
 app.get("/blog/create", (request, response) => {
     //response.sendFile(__dirname + "/newblog.html");
     response.render("pages/newblog", {logged: request.session.name});
-})
+});
+
+app.get("/users/:user", (request, response) => {
+    let singleUser = request.params.user;
+    let obj = {user: []};
+    const file = "db.json";
+    fs.exists(file, function(exists) {
+        if (exists) {
+            fs.readFile(file, "utf-8", function(err, data) {
+                if (err) {
+                    console.log("user ", err);
+                }
+                
+                const json = JSON.parse(data);
+                for (let i = 0; i < json.user.length; i++) {
+                    if (json.user[i].name == singleUser) {
+                        obj.user = [...obj.user, json.user[i]];
+                        break;
+                    }
+                }
+            response.render("pages/user.ejs", {logged: request.session.name, user: obj});
+            });
+        }
+    });
+});
 
 // needed for parsing json request (application/json)
 // sent by public/js/blog.js customised form data

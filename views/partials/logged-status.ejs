@@ -1,5 +1,5 @@
 <% if (logged) { %>
-    <p class="status">You are now logged in as <strong><%= logged %></strong></p>
+    <p class="status">You are now logged in as <a href="/users/<%= logged %>" title="Go to your user's page"><strong><%= logged %></strong></a></p>
 <% } else { %>
     <p class="status">&nbsp;</p>
 <% } %>
