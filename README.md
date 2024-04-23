@@ -1,5 +1,5 @@
 # node-express-blog-exercise
-A project exercise done with Node.js and Express.js for the Buutti Javascript Trainee Programme
+A project exercise done with Node.js and Express.js for the Buutti Javascript Trainee Programme. An archived repository.
 
 Simple instructions how to get this work:
 
